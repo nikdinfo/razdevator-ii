@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ИИ-раздеватор 2026 — раздень подругу без ограничений и блокировок</title>
+  <meta name="description" content="Раздень любое фото за 15–40 секунд с помощью AI-раздеватора. Реалистичная анатомия, без блюра и водяных знаков. 1 генерация бесплатно. Попробуй у нас на сайте" />
+  <meta property="og:title" content="ИИ-раздеватор 2026" />
+  <meta property="og:description" content="Без лохотронов. Без блюра. С нормальной анатомией. 1 генерация бесплатно." />
+  <meta property="og:type" content="website" />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-card: #14141a;
+      --bg-card-hover: #1a1a22;
+      --text: #f0f0f5;
+      --text-muted: #9a9aab;
+      --accent: #e94560;
+      --accent-hover: #ff6b81;
+      --accent-soft: rgba(233, 69, 96, 0.15);
+      --green: #2ecc71;
+      --border: rgba(255,255,255,0.08);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    ul { list-style: none; }
+
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(11,11,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex; align-items: center;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: #fff; font-weight: 600; font-size: 0.9rem;
+      padding: 10px 20px; border-radius: 999px; transition: 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      padding: 130px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(233,69,96,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-soft); color: var(--accent);
+      font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 999px; margin-bottom: 18px;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero h1 {
+      font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+      font-weight: 800; line-height: 1.15; letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .hero h1 .highlight { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text-muted); margin-bottom: 28px; max-width: 460px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 600; font-size: 1rem; padding: 15px 26px;
+      border-radius: 999px; transition: 0.2s; white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 4px 24px rgba(233,69,96,0.4);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 32px rgba(233,69,96,0.5); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+    .hero-trust {
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+      font-size: 0.85rem; color: var(--text-muted);
+    }
+    .hero-trust-item { display: flex; align-items: center; gap: 6px; }
+    .hero-trust-item svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+    .hero-stats {
+      display: flex; gap: 28px; margin-top: 32px; padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num { font-size: 1.4rem; font-weight: 800; }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* Hero BA */
+    .hero-ba {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .hero-ba-item { position: relative; aspect-ratio: 2/3; overflow: hidden; }
+    .hero-ba-item img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-ba-label {
+      position: absolute; top: 12px; left: 12px;
+      padding: 5px 12px; border-radius: 8px;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); color: #fff;
+    }
+    .hero-ba-item.after .hero-ba-label { background: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 72px 0; }
+    .section-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 3.2vw, 2.1rem); font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 10px; line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 1rem; color: var(--text-muted); max-width: 520px; margin-bottom: 40px;
+    }
+    .section-header { text-align: center; }
+    .section-header .section-sub { margin-left: auto; margin-right: auto; }
+
+    /* GALLERY - before/after pairs */
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .gallery-card {
+      border-radius: var(--radius-sm); overflow: hidden;
+      border: 1px solid var(--border); background: var(--bg-card);
+      transition: 0.25s; cursor: default;
+    }
+    .gallery-card:hover { transform: translateY(-4px); border-color: rgba(233,69,96,0.35); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+    .gallery-pair {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+      background: #0a0a0e;
+    }
+    .gallery-pair .gp-img {
+      position: relative; aspect-ratio: 2/3; overflow: hidden;
+    }
+    .gallery-pair .gp-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .gallery-card:hover .gp-img img { transform: scale(1.04); }
+    .gp-label {
+      position: absolute; top: 8px; left: 8px;
+      font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 5px;
+      background: rgba(0,0,0,0.75); color: #fff; letter-spacing: 0.03em;
+    }
+    .gp-img.after .gp-label { background: var(--accent); }
+    .gallery-caption {
+      padding: 10px 12px; font-size: 0.72rem; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      line-height: 1.35;
+    }
+
+    /* HOW */
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    }
+    .step {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 20px;
+      transition: 0.2s;
+    }
+    .step:hover { border-color: rgba(233,69,96,0.25); background: var(--bg-card-hover); }
+    .step-num {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent-soft); color: var(--accent);
+      font-weight: 800; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .feature {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: 0.2s;
+    }
+    .feature:hover { border-color: rgba(233,69,96,0.3); transform: translateY(-3px); }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--accent-soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 14px;
+    }
+    .feature h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+    .feature p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* COMPARE */
+    .compare-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .compare-table {
+      width: 100%; border-collapse: collapse; min-width: 620px;
+      background: var(--bg-card);
+    }
+    .compare-table th, .compare-table td {
+      padding: 13px 16px; text-align: center; font-size: 0.88rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table th { background: #1a1a22; font-weight: 700; font-size: 0.82rem; }
+    .compare-table th:first-child, .compare-table td:first-child { text-align: left; font-weight: 600; }
+    .compare-table th.hl { background: var(--accent); color: #fff; }
+    .compare-table td.hl { background: rgba(233,69,96,0.08); color: var(--green); font-weight: 600; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 12px; text-align: center; }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      align-items: start;
+    }
+    .price-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+      position: relative; transition: 0.25s;
+    }
+    .price-card:hover { transform: translateY(-4px); }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 12px 40px rgba(233,69,96,0.2);
+      transform: scale(1.03);
+    }
+    .price-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+    .price-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: #fff;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 4px 14px; border-radius: 999px; white-space: nowrap;
+    }
+    .price-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+    .price-amount {
+      font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;
+      margin-bottom: 2px; line-height: 1;
+    }
+    .price-amount span { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); }
+    .price-period { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
+    .price-features { margin-bottom: 24px; }
+    .price-features li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.88rem; padding: 6px 0; color: var(--text-muted);
+    }
+    .price-features li .check {
+      flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; margin-top: 2px;
+    }
+    .price-features li .check.yes { background: rgba(46,204,113,0.15); color: var(--green); }
+    .price-features li .check.no { background: rgba(255,255,255,0.06); color: #666; }
+    .price-card .btn { width: 100%; }
+    .pricing-note {
+      text-align: center; font-size: 0.82rem; color: var(--text-muted);
+      margin-top: 24px;
+    }
+
+    /* REVIEWS */
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .review {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .review-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .review-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--accent-soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .review-name { font-weight: 600; font-size: 0.92rem; }
+    .review-date { font-size: 0.72rem; color: var(--text-muted); }
+    .review-stars { color: #f1c40f; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 1px; }
+    .review p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; text-align: left;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 18px 0; font-size: 1rem; font-weight: 600; color: var(--text);
+      transition: 0.2s;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-q .arrow {
+      flex-shrink: 0; width: 22px; height: 22px;
+      transition: transform 0.25s; color: var(--text-muted);
+    }
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); color: var(--accent); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s;
+      font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .faq-item.open .faq-a { max-height: 280px; padding-bottom: 18px; }
+
+    /* FINAL CTA */
+    .final-cta {
+      text-align: center; padding: 90px 0;
+      position: relative;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(233,69,96,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .final-cta h2 {
+      font-size: clamp(1.7rem, 3.8vw, 2.4rem); font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 14px;
+    }
+    .final-cta p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 28px; }
+    .final-cta .btn { font-size: 1.05rem; padding: 16px 36px; }
+    .final-badges {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 18px;
+      margin-top: 24px; font-size: 0.82rem; color: var(--text-muted);
+    }
+    .final-badges span { display: flex; align-items: center; gap: 6px; }
+    .age-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(233,69,96,0.12); color: var(--accent);
+      font-weight: 700; font-size: 0.72rem; padding: 4px 10px; border-radius: 6px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 44px 0 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 36px;
+      margin-bottom: 36px;
+    }
+    .footer-brand .logo { margin-bottom: 10px; display: inline-block; }
+    .footer-brand p { font-size: 0.88rem; color: var(--text-muted); max-width: 260px; line-height: 1.5; }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; color: var(--text-muted); }
+    .footer-col a { display: block; font-size: 0.88rem; color: var(--text-muted); padding: 3px 0; transition: 0.15s; }
+    .footer-col a:hover { color: var(--text); }
+    .footer-bottom {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 12px; padding-top: 22px; border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+
+    /* STICKY */
+    .sticky-cta {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+      z-index: 90; opacity: 0; pointer-events: none;
+      transition: 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .sticky-cta.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+    .sticky-cta .btn {
+      box-shadow: 0 8px 32px rgba(233,69,96,0.45), 0 2px 8px rgba(0,0,0,0.3);
+      padding: 13px 26px; font-size: 0.92rem;
+      flex-direction: column; gap: 1px;
+    }
+    .sticky-cta .btn small {
+      font-size: 0.68rem; font-weight: 500; opacity: 0.85;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-ba { max-width: 420px; margin: 0 auto; order: -1; }
+      .hero { padding: 100px 0 50px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .price-card.featured { transform: none; }
+      .price-card.featured:hover { transform: translateY(-4px); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+    @media (max-width: 560px) {
+      .steps { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; }
+      .gallery-grid { grid-template-columns: 1fr; gap: 14px; }
+      .gallery-pair { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">Undress<span>AI</span></a>
+      <div class="nav-links">
+        <a href="#examples">Примеры</a>
+        <a href="#how">Как работает</a>
+        <a href="#pricing">Тарифы</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="nav-cta">Попробовать бесплатно</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">Работает 24/7 · 127 000+ генераций</div>
+          <h1>ИИ-раздеватор<span class="highlight"> девушек </span> без ограничений </h1>
+          <p class="hero-sub">Реалистичная анатомия. Сохраняем лицо и позу. Честный ИИ-раздеватор 2026 — без лохотронов.</p>
+          <div class="hero-actions">
+            <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-primary">
+              Попробовать бесплатно
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#examples" class="btn btn-ghost">Смотреть примеры ↓</a>
+          </div>
+          <div class="hero-trust">
+            <div class="hero-trust-item">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              1 генерация бесплатно
+            </div>
+            <div class="hero-trust-item">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Без привязки карты
+            </div>
+            <div class="hero-trust-item">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Фото удаляются
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div><div class="stat-num">15–40с</div><div class="stat-label">среднее время</div></div>
+            <div><div class="stat-num">4.9</div><div class="stat-label">оценка качества</div></div>
+            <div><div class="stat-num">18+</div><div class="stat-label">только для взрослых</div></div>
+          </div>
+        </div>
+        <div class="hero-ba">
+          <div class="hero-ba-item">
+            <img src="images/before_1.jpg" alt="До — пример 1" width="300" height="450" loading="eager" />
+            <span class="hero-ba-label">До</span>
+          </div>
+          <div class="hero-ba-item after">
+            <img src="images/after_1.jpg" alt="После — пример 1" width="300" height="450" loading="eager" />
+            <span class="hero-ba-label">После</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="examples">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Примеры</div>
+        <h2 class="section-title">Реальные результаты. С цензурой 18+.</h2>
+        <p class="section-sub">Только женщины. Разные ракурсы и освещение. На «после» — плотная цензура (в боте без неё).</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <div class="gallery-pair">
+            <div class="gp-img"><img src="images/before_1.jpg" alt="До 1" loading="lazy" width="300" height="450" /><span class="gp-label">До</span></div>
+            <div class="gp-img after"><img src="images/after_1.jpg" alt="После 1" loading="lazy" width="300" height="450" /><span class="gp-label">После</span></div>
+          </div>
+          <div class="gallery-caption">Офисный look · белая рубашка</div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-pair">
+            <div class="gp-img"><img src="images/before_2.jpg" alt="До 2" loading="lazy" width="300" height="450" /><span class="gp-label">До</span></div>
+            <div class="gp-img after"><img src="images/after_2.jpg" alt="После 2" loading="lazy" width="300" height="450" /><span class="gp-label">После</span></div>
+          </div>
+          <div class="gallery-caption">Рыжие волосы · свитер у окна</div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-pair">
+            <div class="gp-img"><img src="images/before_3.jpg" alt="До 3" loading="lazy" width="300" height="450" /><span class="gp-label">До</span></div>
+            <div class="gp-img after"><img src="images/after_3.jpg" alt="После 3" loading="lazy" width="300" height="450" /><span class="gp-label">После</span></div>
+          </div>
+          <div class="gallery-caption">Бежевый свитер · loft</div>
+        </div>
+        <div class="gallery-card">
+          <div class="gallery-pair">
+            <div class="gp-img"><img src="images/before_4.jpg" alt="До 4" loading="lazy" width="300" height="450" /><span class="gp-label">До</span></div>
+            <div class="gp-img after"><img src="images/after_4.jpg" alt="После 4" loading="lazy" width="300" height="450" /><span class="gp-label">После</span></div>
+          </div>
+          <div class="gallery-caption">Цветочное платье · дневной свет</div>
+        </div>
+
+        <!-- 1 -->
+        <!-- 6 -->
+        <!-- 7 -->
+        <!-- 8 -->
+      </div>
+      <div style="text-align:center;margin-top:36px">
+        <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-primary">Хочу такое качество</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" style="background:rgba(255,255,255,0.02)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Как это работает</div>
+        <h2 class="section-title">4 шага. Меньше минуты.</h2>
+        <p class="section-sub">Ничего устанавливать не нужно. Всё в Telegram.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Открой бота</h3>
+          <p>Нажми кнопку и перейди в Telegram. Регистрация не нужна.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Загрузи фото</h3>
+          <p>Отправь любое фото. Чем лучше исходник — тем лучше результат.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Выбери режим</h3>
+          <p>Стандарт, максимальное качество или видео. Жми «Генерировать».</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Скачай результат</h3>
+          <p>Через 15–40 секунд готово. Без водяных знаков на платных.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:36px">
+        <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-primary">Попробовать самому</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Почему мы</div>
+        <h2 class="section-title">Не обещаем «магию». Просто работает лучше.</h2>
+        <p class="section-sub">Вот что отличает нормальный инструмент от лохотрона.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">🧬</div>
+          <h3>Реалистичная анатомия</h3>
+          <p>Кожа без «пластика», правильные пропорции, руки и пальцы на месте.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">👤</div>
+          <h3>Лицо и поза сохраняются</h3>
+          <p>ИИ не перерисовывает человека. Лицо, ракурс и освещение остаются.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>15–40 секунд</h3>
+          <p>Без очередей на час. На Премиуме — почти мгновенно.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <h3>Фото удаляются</h3>
+          <p>Загруженные изображения автоматически удаляются. Мы ничего не храним.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎬</div>
+          <h3>Видео до 15 секунд</h3>
+          <p>На тарифе Премиум можно раздевать короткие видео.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💬</div>
+          <h3>Честные тарифы</h3>
+          <p>Понятные лимиты. Без скрытых списаний. 1 генерация — бесплатно.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="compare" style="background:rgba(255,255,255,0.02)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Сравнение</div>
+        <h2 class="section-title">Мы vs остальные</h2>
+        <p class="section-sub">Без воды. Просто факты.</p>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Параметр</th>
+              <th class="hl">Мы</th>
+              <th>Бот A</th>
+              <th>Бот B</th>
+              <th>Бесплатные</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Анатомия / кожа</td><td class="hl">Отлично</td><td>Средне</td><td>Плохо</td><td>Ужасно</td></tr>
+            <tr><td>Водяные знаки</td><td class="hl">Нет*</td><td>Есть</td><td>Есть</td><td>Всегда</td></tr>
+            <tr><td>Скорость</td><td class="hl">15–40 сек</td><td>1–3 мин</td><td>2–5 мин</td><td>Очередь</td></tr>
+            <tr><td>Видео</td><td class="hl">Да (Премиум)</td><td>Нет</td><td>Платно</td><td>Нет</td></tr>
+            <tr><td>Приватность</td><td class="hl">Удаляем</td><td>Хранят</td><td>Неизвестно</td><td>Риск</td></tr>
+            <tr><td>Цена за генерацию</td><td class="hl">от 0 ₽</td><td>от 30 ₽</td><td>от 50 ₽</td><td>«Бесплатно»*</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="compare-note">*На Стандарте и Премиуме водяных знаков нет. На Бесплатном — лёгкий. «Бесплатные» почти всегда требуют подписку или выдают мусор.</p>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Тарифы</div>
+        <h2 class="section-title">Выбери свой уровень</h2>
+        <p class="section-sub">Начни бесплатно. Апгрейд — когда убедишься.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-name">Бесплатный</div>
+          <div class="price-amount">0 <span>₽</span></div>
+          <div class="price-period">навсегда</div>
+          <ul class="price-features">
+            <li><span class="check yes">✓</span> 1 генерация в неделю</li>
+            <li><span class="check yes">✓</span> Стандартное качество</li>
+            <li><span class="check no">✕</span> Лёгкий водяной знак</li>
+            <li><span class="check no">✕</span> Без видео</li>
+            <li><span class="check no">✕</span> Обычная очередь</li>
+            <li><span class="check no">✕</span> Без перегенерации</li>
+          </ul>
+          <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-ghost">Начать бесплатно</a>
+        </div>
+        <div class="price-card featured">
+          <div class="price-badge">ХИТ · Выбор 78%</div>
+          <div class="price-name">Стандарт</div>
+          <div class="price-amount">490 <span>₽/мес</span></div>
+          <div class="price-period">или 390 ₽/мес при оплате за 3 месяца</div>
+          <ul class="price-features">
+            <li><span class="check yes">✓</span> 30 генераций в месяц</li>
+            <li><span class="check yes">✓</span> Высокое качество · без водяных</li>
+            <li><span class="check yes">✓</span> Полное разрешение</li>
+            <li><span class="check yes">✓</span> Приоритетная очередь</li>
+            <li><span class="check yes">✓</span> 1 перегенерация на результат</li>
+            <li><span class="check yes">✓</span> История 30 дней · поддержка</li>
+          </ul>
+          <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-primary">Выбрать Стандарт</a>
+        </div>
+        <div class="price-card">
+          <div class="price-name">Премиум</div>
+          <div class="price-amount">990 <span>₽/мес</span></div>
+          <div class="price-period">или 790 ₽/мес при оплате за 3 месяца</div>
+          <ul class="price-features">
+            <li><span class="check yes">✓</span> 100 генераций в месяц</li>
+            <li><span class="check yes">✓</span> Макс. качество · 4K-апскейл</li>
+            <li><span class="check yes">✓</span> Видео до 15 секунд</li>
+            <li><span class="check yes">✓</span> VIP-очередь</li>
+            <li><span class="check yes">✓</span> 3 перегенерации на результат</li>
+            <li><span class="check yes">✓</span> Пакетная загрузка · 24/7 поддержка</li>
+          </ul>
+          <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-ghost">Взять Премиум</a>
+        </div>
+      </div>
+      <p class="pricing-note">Отмена в любой момент · Безопасная оплата · 18+</p>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" style="background:rgba(255,255,255,0.02)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Отзывы</div>
+        <h2 class="section-title">Что говорят после теста</h2>
+        <p class="section-sub">Живые люди. Без накрутки.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review">
+          <div class="review-top"><div class="review-avatar">А</div><div><div class="review-name">Алексей</div><div class="review-date">12 июля 2026</div></div></div>
+          <div class="review-stars">★★★★★</div>
+          <p>Перепробовал штук 5 ботов. Этот первый, где руки не превращаются в щупальца, а кожа выглядит как кожа. На Стандарте уже огонь.</p>
+        </div>
+        <div class="review">
+          <div class="review-top"><div class="review-avatar">Д</div><div><div class="review-name">Дмитрий</div><div class="review-date">8 июля 2026</div></div></div>
+          <div class="review-stars">★★★★★</div>
+          <p>Скинул фото в тёмной комнате с плохим светом — думал сольёт. Нет, справился. Лицо сохранил один в один.</p>
+        </div>
+        <div class="review">
+          <div class="review-top"><div class="review-avatar">М</div><div><div class="review-name">Максим</div><div class="review-date">3 июля 2026</div></div></div>
+          <div class="review-stars">★★★★☆</div>
+          <p>На сложных позах иногда лёгкий артефакт, но в 9 из 10 — топ. Видео на Премиуме реально работает.</p>
+        </div>
+        <div class="review">
+          <div class="review-top"><div class="review-avatar">И</div><div><div class="review-name">Игорь</div><div class="review-date">28 июня 2026</div></div></div>
+          <div class="review-stars">★★★★★</div>
+          <p>Бесплатная генерация убедила сразу. Без карты, без регистрации на сайте. Просто бот в телеге.</p>
+        </div>
+        <div class="review">
+          <div class="review-top"><div class="review-avatar">С</div><div><div class="review-name">Сергей</div><div class="review-date">21 июня 2026</div></div></div>
+          <div class="review-stars">★★★★★</div>
+          <p>Наконец-то без водяных знаков на платном. Качал, смотрел — чисто. Больше не вернусь к «бесплатным» помойкам.</p>
+        </div>
+        <div class="review">
+          <div class="review-top"><div class="review-avatar">К</div><div><div class="review-name">Кирилл</div><div class="review-date">15 июня 2026</div></div></div>
+          <div class="review-stars">★★★★★</div>
+          <p>Поддержка ответила за 3 минуты. Перегенерили бесплатно. Вот это сервис, а не лохотрон.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Частые вопросы</h2>
+        <p class="section-sub">Если не нашёл ответ — напиши в поддержку в боте.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">Это легально? Что с приватностью фото? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Сервис только для 18+. Используйте свои фото или фото с согласием. Загруженные изображения автоматически удаляются. Мы не храним и не передаём файлы.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Фото сохраняются на серверах? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Нет. После генерации исходник и результат удаляются. История на платных тарифах хранится только у вас в боте и может быть очищена.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Можно ли чужие фото или знаменитостей? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Технически бот обработает. Но этически и юридически — только свои или с согласия. Генерация с несовершеннолетними запрещена и блокируется.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Какое качество? Есть ограничения? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">На Стандарте и Премиуме — высокое разрешение без водяных. Лучше всего на фото с хорошим светом. В 9 из 10 — отлично.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Работает ли с видео? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Да, на Премиуме. Короткие видео до 15 секунд. На Бесплатном и Стандарте — только фото.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Сколько ждать результат? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">В среднем 15–40 секунд. На Премиуме часто быстрее 15 сек.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Плохой результат — есть перегенерация? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">На Стандарте — 1 бесплатная. На Премиуме — 3. На Бесплатном нет.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Как оплатить? Есть гарантии? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Оплата в Telegram (карта, СБП). Подписку можно отменить в любой момент. Первая генерация всегда бесплатна.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">С телефона можно? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Да. Весь сервис в Telegram — телефон, планшет, компьютер. Приложение не нужно.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Чем лучше бесплатных ботов? <svg class="arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a">Качество анатомии, нет сильного блюра, нормальная скорость, приватность, результат без водяных знаков. Проверьте на бесплатной генерации.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Готов убедиться сам?</h2>
+      <p>1 генерация бесплатно. Без карты. Без регистрации на сайте.<br>Просто открой бота и загрузи фото.</p>
+      <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-primary">
+        Попробовать прямо сейчас
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="final-badges">
+        <span>✓ Результат за 15–40 сек</span>
+        <span>✓ Фото удаляются</span>
+        <span>✓ Поддержка 24/7</span>
+        <span class="age-badge">18+</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">Undress<span>AI</span></a>
+          <p>Честный ИИ-раздеватор 2026. Реалистично. Быстро. Без лохотронов.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Навигация</h4>
+          <a href="#examples">Примеры</a>
+          <a href="#how">Как работает</a>
+          <a href="#pricing">Тарифы</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Информация</h4>
+          <a href="#">Политика конфиденциальности</a>
+          <a href="#">Пользовательское соглашение</a>
+          <a href="#">Поддержка</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 UndressAI. Все права защищены.</div>
+        <div class="age-badge">18+ Только для взрослых</div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" id="stickyCta">
+    <a href="https://curt1.ru/K4kDGL?sub1=razdevator-ii" target="_blank" rel="noopener" class="btn btn-primary">
+      Открыть бота
+      <small>1 генерация бесплатно</small>
+    </a>
+  </div>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+    const sticky = document.getElementById('stickyCta');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 700) sticky.classList.add('show');
+      else sticky.classList.remove('show');
+    }, {passive:true});
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id.length > 1) {
+          const el = document.querySelector(id);
+          if (el) { e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
